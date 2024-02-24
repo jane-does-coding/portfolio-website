@@ -85,8 +85,22 @@ const Modal = ({
               {/* BODY */}
               <div className="relative p-6 py-4 flex-auto">{body}</div>
               {/* FOOTER */}
-              <div className="flex flex-col gap-2 p-6 py-4">
-                <Button label={actionLabel} />
+              <div className="flex flex-col gap-2 p-6 py-4 w-full">
+                <div className="flex flex-row items-center gap-4 w-full">
+                  {secondaryAction && secondaryActionLabel && (
+                    <Button
+                      disabled={disabled}
+                      label={secondaryActionLabel}
+                      onClick={handleSecondaryAction}
+                      outline
+                    />
+                  )}
+                  <Button
+                    disabled={disabled}
+                    label={actionLabel}
+                    onClick={handleSubmit}
+                  />
+                </div>
               </div>
             </div>
           </div>

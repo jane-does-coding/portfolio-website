@@ -7,9 +7,11 @@ interface ButtonProps {
   rounded?: boolean;
   wave?: boolean;
   outline?: boolean;
+  disabled?: boolean;
   small?: boolean;
   beforeIcon?: IconType;
   afterIcon?: IconType;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({
@@ -20,10 +22,14 @@ const Button = ({
   wave,
   small,
   outline,
+  disabled,
+  onClick,
 }: ButtonProps) => {
   return (
     <button
-      className={`bg-neutral-900 flex flex-row rounded-md items-center justify-center relative hover:opacity-90 transition 
+      disabled={disabled}
+      onClick={onClick}
+      className={`bg-neutral-900 w-full flex flex-row rounded-md items-center justify-center relative hover:opacity-90 transition 
       ${small ? "p-2 text-sm" : "p-3"}
       ${
         outline

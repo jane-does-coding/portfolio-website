@@ -19,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Modal isOpen title="Login" actionLabel="Submit" body={<p>hey</p>} />
         <Navbar />
         {children}
       </body>
