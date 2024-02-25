@@ -19,7 +19,6 @@ const Button = ({
   afterIcon: AfterIcon,
   label,
   rounded,
-  wave,
   small,
   outline,
   disabled,
@@ -29,15 +28,14 @@ const Button = ({
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`bg-neutral-900 w-full flex flex-row rounded-md items-center justify-center relative hover:opacity-90 transition 
+      className={`bg-neutral-900 w-full flex flex-row items-center justify-center relative hover:opacity-90 transition 
       ${small ? "p-2 text-sm" : "p-3"}
       ${
         outline
           ? "bg-transparent border-2 border-neutral-900 text-black font-semibold hover:bg-neutral-300"
           : "border-none text-white"
       }
-      ${wave ? "rounded-sm rounded-tl-[3rem] rounded-br-[3rem]" : ""}
-      ${rounded ? "rounded-[20rem]" : ""}
+      ${rounded ? "rounded-full" : " rounded-md"}
       `}
     >
       {BeforeIcon && (

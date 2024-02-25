@@ -73,14 +73,14 @@ const Modal = ({
           >
             <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg relative flex flex-col w-full bg-neutral-100 outline-none focus:outline-none">
               {/* HEADER */}
-              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1px]">
+              <div className="flex items-center p-6 rounded-t justify-center relative border-b-[1.5px] border-neutral-300">
                 <button
-                  className="p-2 rounded-full hover:bg-neutral-200 border-0 transition absolute left-9"
+                  className="p-2 text-black rounded-full hover:bg-neutral-200 border-0 transition absolute left-9"
                   onClick={handleClose}
                 >
                   <IoMdClose size={20} />
                 </button>
-                <div className="text-lg">{title}</div>
+                <div className="text-lg text-black">{title}</div>
               </div>
               {/* BODY */}
               <div className="relative p-6 py-4 flex-auto">{body}</div>
@@ -101,6 +101,7 @@ const Modal = ({
                     onClick={handleSubmit}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>
