@@ -8,11 +8,14 @@ import Heading from "../Heading";
 import Input from "../Inputs/Input";
 import toast from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const RegisterModal = () => {
+const LoginModal = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -20,7 +23,6 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -29,46 +31,32 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        registerModal.onClose();
-      })
-      .catch((err: any) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success("Logged in");
+        router.refresh();
+        loginModal.onClose();
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   const switchModal = () => {
-    registerModal.onClose();
-    loginModal.onOpen();
+    loginModal.onClose();
+    registerModal.onOpen();
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-3">
-      <Heading title="Register" subtitle="Create an account" />
-      <div className="flex gap-3">
-        <Input
-          id="name"
-          label="Full Name"
-          disabled={isLoading}
-          errors={errors}
-          required
-          register={register}
-        />
-        <Input
-          id="username"
-          label="Username"
-          disabled={isLoading}
-          errors={errors}
-          required
-          register={register}
-        />
-      </div>
+      <Heading title="Login" subtitle="Please sign in" />
       <Input
         id="email"
         label="Email"
@@ -92,12 +80,12 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="flex flex-col text-center items-center justify-center py-1 pt-3 relative">
       <p className="flex flex-row gap-2">
-        Already have an account?{" "}
+        Don't have an account?{" "}
         <span
           onClick={switchModal}
           className="hover:cursor-pointer flex block transition hover:underline"
         >
-          Login
+          Sign up
         </span>
       </p>
     </div>
@@ -106,10 +94,10 @@ const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
-      actionLabel="Register"
-      onClose={registerModal.onClose}
+      isOpen={loginModal.isOpen}
+      title="Login"
+      actionLabel="Login"
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -117,4 +105,4 @@ const RegisterModal = () => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
