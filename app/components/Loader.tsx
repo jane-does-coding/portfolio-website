@@ -10,10 +10,10 @@ const Loader = () => {
           cy="400"
           fill="none"
           r="250"
-          stroke-width="31"
+          strokeWidth="31"
           stroke="#817fef"
-          stroke-dasharray="998 1400"
-          stroke-linecap="round"
+          strokeDasharray="998 1400"
+          strokeLinecap="round"
         />
       </svg>
     </div>

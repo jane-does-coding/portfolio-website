@@ -2,16 +2,20 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-export default function BlurryCursor({ isActive }: any) {
+interface BlurryCursorProps {
+  isActive: boolean;
+}
+
+const BlurryCursor: React.FC<BlurryCursorProps> = ({ isActive }) => {
   const mouse = useRef({ x: 0, y: 0 });
   const delayedMouse = useRef({ x: 0, y: 0 });
-  const rafId = useRef(null);
-  const circle = useRef();
-  const size = isActive ? 400 : 30;
+  const rafId = useRef<number | null>(null);
+  const circle = useRef<HTMLDivElement | null>(null);
+  const size = isActive ? 400 : 20;
 
-  const lerp = (x, y, a) => x * (1 - a) + y * a;
+  const lerp = (x: number, y: number, a: number) => x * (1 - a) + y * a;
 
-  const manageMouseMove = (e) => {
+  const manageMouseMove = (e: MouseEvent) => {
     const { clientX, clientY } = e;
 
     mouse.current = {
@@ -28,12 +32,14 @@ export default function BlurryCursor({ isActive }: any) {
       y: lerp(y, mouse.current.y, 0.075),
     };
 
-    moveCircle(delayedMouse.current.x, delayedMouse.current.y);
+    if (circle.current) {
+      moveCircle(delayedMouse.current.x, delayedMouse.current.y);
+    }
 
     rafId.current = window.requestAnimationFrame(animate);
   };
 
-  const moveCircle = (x, y) => {
+  const moveCircle = (x: number, y: number) => {
     gsap.set(circle.current, { x, y, xPercent: -50, yPercent: -50 });
   };
 
@@ -42,7 +48,9 @@ export default function BlurryCursor({ isActive }: any) {
     window.addEventListener("mousemove", manageMouseMove);
     return () => {
       window.removeEventListener("mousemove", manageMouseMove);
-      window.cancelAnimationFrame(rafId.current);
+      if (rafId.current) {
+        window.cancelAnimationFrame(rafId.current);
+      }
     };
   }, [isActive, animate]);
 
@@ -56,10 +64,11 @@ export default function BlurryCursor({ isActive }: any) {
           filter: `blur(${isActive ? 30 : 0}px)`,
           transition: `height 0.3s ease-out, width 0.3s ease-out, filter 0.3s ease-out`,
         }}
-        /* Soft light, HARD LIGHT */
         className="top-0 left-0 fixed rounded-full mix-blend-hard-light pointer-events-none"
         ref={circle}
       />
     </div>
   );
-}
+};
+
+export default BlurryCursor;
