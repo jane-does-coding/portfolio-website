@@ -7,6 +7,8 @@ import ToasterProvider from "./providers/ToasterProvider";
 import LoginModal from "./components/Modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import { usePathname } from "next/navigation";
+import Header from "../app/components/Header";
+import Loader from "./components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,12 +26,15 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#0f0f0f] text-neutral-100`}>
         <ToasterProvider />
         <RegisterModal />
         <LoginModal />
-        <Navbar currentUser={currentUser} />
+        {/*         <Navbar currentUser={currentUser} />
+         */}
+        <Header />
         {children}
+        <Loader />
       </body>
     </html>
   );

@@ -11,16 +11,8 @@ interface NavbarProps {
 
 const Navbar = ({ currentUser }: NavbarProps) => {
   return (
-    <nav className="fixed w-full bg-white z-10">
-      <div className="py-4 border-b-[1px]">
-        <Container>
-          <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
-            <Logo />
-            {currentUser?.name}
-            <UserMenu />
-          </div>
-        </Container>
-      </div>
+    <nav className="fixed w-fit left-[50%] top-2 rounded-md translate-x-[-50%] bg-neutral-800 z-10">
+      <UserMenu />
     </nav>
   );
 };

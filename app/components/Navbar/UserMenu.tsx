@@ -16,10 +16,10 @@ const UserMenu = () => {
   }, []);
 
   return (
-    <div className="relative text-black">
+    <div className="relative text-black w-fit">
       <div className="flex flex-row items-center gap-3">
         <div
-          className="p-4 md:py-3 md:px-3 transition flex flex-row  items-center gap-3 rounded-full cursor-pointer hover:bg-neutral-100"
+          className="p-4 md:py-3 md:px-3 transition flex flex-row  items-center gap-3 rounded-full cursor-pointer hover:bg-neutral-800"
           onClick={toggleOpen}
         >
           <AiOutlineMenu size={24} />
