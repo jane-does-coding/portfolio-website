@@ -50,7 +50,7 @@ export default function GradientCursor({ isActive }: any) {
       window.removeEventListener("mousemove", manageMouseMove);
       window.cancelAnimationFrame(rafId.current);
     };
-  }, [isActive]);
+  }, [isActive, animate]);
 
   return (
     <div className="relative h-screen">
